@@ -1,0 +1,14 @@
+SELECT DISTINCT ?zoo ?zooLabel ?country ?countryLabel ?region ?regionLabel ?coord ?inception ?website WHERE {
+  ?zoo wdt:P31/wdt:P279* wd:Q43501 ;
+       wdt:P17 ?country .
+
+  ?country wdt:P30 wd:Q48 .
+
+  OPTIONAL { ?zoo wdt:P131 ?region. }
+  OPTIONAL { ?zoo wdt:P625 ?coord. }
+  OPTIONAL { ?zoo wdt:P571 ?inception. }
+  OPTIONAL { ?zoo wdt:P856 ?website. }
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+LIMIT 1000
