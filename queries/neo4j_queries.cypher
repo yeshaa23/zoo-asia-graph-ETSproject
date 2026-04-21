@@ -1,4 +1,5 @@
-# membuat projection  analisis dengan algoritma similarity 
+# SIMILARITY
+# projection untuk similarity 
 CALL gds.graph.project.cypher(
   'zoo_sim',
   '
@@ -17,7 +18,7 @@ CALL gds.graph.project.cypher(
 YIELD graphName, nodeCount, relationshipCount
 RETURN graphName, nodeCount, relationshipCount;
 
-# jaccard similarity berdasarkan country, region, dan published year
+# jaccard similarity berdasarkan node country, region, dan published year
 CALL gds.nodeSimilarity.stream('zoo_all_sim')
 YIELD node1, node2, similarity
 WITH gds.util.asNode(node1) AS n1, gds.util.asNode(node2) AS n2, similarity
@@ -29,7 +30,7 @@ RETURN
 ORDER BY similarity DESC, zoo1, zoo2
 LIMIT 20;
 
-# lihat jumlah nilai similarity 
+# lihat jumlah pasangan per nilai similarity 
 CALL gds.nodeSimilarity.stream('zoo_similarity_best')
 YIELD node1, node2, similarity
 WITH gds.util.asNode(node1) AS z1, gds.util.asNode(node2) AS z2, round(similarity, 3) AS sim
@@ -38,7 +39,8 @@ WHERE z1:Zoo AND z2:Zoo
 RETURN sim, count(*) AS jumlahPasangan
 ORDER BY sim DESC;
 
-# membuat projection analisis dengan algoritma centrality 
+# CENTRALITY
+# projection analisis dengan algoritma centrality 
 CALL gds.nodeSimilarity.stream('zoo_all_sim')
 YIELD node1, node2, similarity
 WITH gds.util.asNode(node1) AS n1, gds.util.asNode(node2) AS n2, similarity
@@ -56,14 +58,13 @@ LIMIT 20;
 CALL gds.pageRank.stream('zoo_centrality_pr')
 YIELD nodeId, score
 WITH gds.util.asNode(nodeId) AS n, score
-RETURN
-  labels(n) AS nodeType,
-  coalesce(n.zooLabel, n.regionLabel, n.countryLabel, toString(n.year), n.name) AS nodeName,
-  score
+RETURN labels(n) AS nodeType,
+       coalesce(n.zooLabel, n.regionLabel, n.countryLabel, toString(n.year), n.name) AS nodeName,
+       round(score, 4) AS score
 ORDER BY score DESC
 LIMIT 20;
 
-# pageRank centrality berdasarkan region 
+# pageRank centrality berdasarkan region (top 5 region)
 CALL gds.pageRank.stream('zoo_centrality_pr')
 YIELD nodeId, score
 WITH gds.util.asNode(nodeId) AS n, score
@@ -74,7 +75,7 @@ RETURN
 ORDER BY score DESC
 LIMIT 5;
 
-# pageRank centrality berdasarkan country 
+# pageRank centrality berdasarkan country (top 5 country)
 CALL gds.pageRank.stream('zoo_centrality_pr')
 YIELD nodeId, score
 WITH gds.util.asNode(nodeId) AS n, score
@@ -85,7 +86,7 @@ RETURN
 ORDER BY score DESC
 LIMIT 5;
 
-# pageRank centrality berdasarkan zoo
+# pageRank centrality berdasarkan zoo (top 5 zoo)
 CALL gds.pageRank.stream('zoo_centrality_pr')
 YIELD nodeId, score
 WITH gds.util.asNode(nodeId) AS n, score
@@ -96,7 +97,8 @@ RETURN
 ORDER BY score DESC
 LIMIT 5;
 
-# membuat projection analisis dengan algoritma community
+# COMMUNITY
+# membuat projection untuk community detection
 CALL gds.graph.project.cypher(
   'zoo_community_best',
   '
@@ -116,7 +118,7 @@ CALL gds.graph.project.cypher(
 YIELD graphName, nodeCount, relationshipCount
 RETURN graphName, nodeCount, relationshipCount;
 
-# hasil jumlah community 
+# hasil jumlah Zoo per komunitas dan contoh Zoo 
 CALL gds.louvain.stream('zoo_community_best')
 YIELD nodeId, communityId
 WITH gds.util.asNode(nodeId) AS n, communityId
