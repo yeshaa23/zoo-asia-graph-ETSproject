@@ -6,6 +6,8 @@ PREFIX owl:  <http://www.w3.org/2002/07/owl#>
 SELECT DISTINCT ?zooLabel
        ?wikidata
        ?abstract
+       ?countryLabel
+       ?regionLabel
 WHERE {
   ?dbpediaZoo rdf:type dbo:Zoo ;
               rdfs:label ?zooLabel ;
