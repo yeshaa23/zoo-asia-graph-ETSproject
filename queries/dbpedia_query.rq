@@ -2,23 +2,35 @@ PREFIX dbo:  <http://dbpedia.org/ontology/>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
 
-SELECT DISTINCT ?zooLabel
+SELECT DISTINCT 
+       ?zooLabel
        ?wikidata
        ?abstract
-       ?countryLabel
-       ?regionLabel
+       ?locationLabel
+       ?lat
+       ?long
 WHERE {
-  ?dbpediaZoo rdf:type dbo:Zoo ;
-              rdfs:label ?zooLabel ;
-              owl:sameAs ?wikidata .
+  ?zoo rdf:type dbo:Zoo ;
+       rdfs:label ?zooLabel ;
+       owl:sameAs ?wikidata .
 
   FILTER (lang(?zooLabel) = "en")
   FILTER(CONTAINS(STR(?wikidata), "wikidata.org/entity/"))
 
   OPTIONAL {
-    ?dbpediaZoo dbo:abstract ?abstract .
+    ?zoo dbo:abstract ?abstract .
     FILTER (lang(?abstract) = "en")
   }
+
+  OPTIONAL {
+    ?zoo dbo:location ?location .
+    ?location rdfs:label ?locationLabel .
+    FILTER (lang(?locationLabel) = "en")
+  }
+
+  OPTIONAL { ?zoo geo:lat ?lat . }
+  OPTIONAL { ?zoo geo:long ?long . }
 }
 LIMIT 1000
