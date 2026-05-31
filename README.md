@@ -51,5 +51,5 @@ Menggunakan Louvain untuk mendeteksi komunitas alami dalam jaringan. Hasil menun
 - Community detection menunjukkan klaster yang cukup jelas berdasarkan country dan region
 
 ## Penulis
-Nama: Ayesha Hana Azkiya (5026231125) dan Amandea Chandiki Larasati (5026231139) 
+Ayesha Hana Azkiya (5026231125) dan Amandea Chandiki Larasati (5026231139) 
 Link Wikidata Project: [https://www.wikidata.org/wiki/User:Chandiki/Kebun_Binatang_di_Asia:_Integrasi_Data_dari_Wikidata_dan_DBpedia_untuk_Analisis_Graf#Struktur_Graf]
