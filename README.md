@@ -52,5 +52,4 @@ Menggunakan Louvain untuk mendeteksi komunitas alami dalam jaringan. Hasil menun
 
 ## Penulis
 Nama: Ayesha Hana Azkiya (5026231125) dan Amandea Chandiki Larasati (5026231139) 
-Mata Kuliah: Graf Pengetahuan
-Link Wikidata Project: [Tempel URL halaman Wikidata kamu di sini]
+Link Wikidata Project: [https://www.wikidata.org/wiki/User:Chandiki/Kebun_Binatang_di_Asia:_Integrasi_Data_dari_Wikidata_dan_DBpedia_untuk_Analisis_Graf#Struktur_Graf]
